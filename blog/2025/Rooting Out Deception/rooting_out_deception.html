@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Rooting Out Deception</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="rooting-out-deception">Rooting Out Deception</h1>
+<h2 id="why-deception">Why Deception</h2>
+<p>Deception is certainly not the only behavior to target in the &quot;<span class="tooltip">alignment
+<span class="tooltiptext">
+Alignment: ensuring AI systems have humanity's best interest at heart or, at least, are not going to destroy or enslave us.
+</span>
+</span> program&quot;. Arguably it is not the hardest or most important. A deceptive agent might still have the good of humanity at heart. And aligning values is probably harder than tackling deception. Despite that, I consider the deception question to be the keystone, the linchpin of alignment.</p>
+<p>That is because every other aspect of alignment is made more difficult by the presence of deception. Are our models capable of agentic planning? Well they might not appear to be... But what if they're sandbagging? Do our models value human life and prosperity? Well they might seem to... But what if they're lying?</p>
+<p>Identifying or preventing deception is not <i>necessary</i> to have an aligned agent, in theory. But in the presence of deception we cannot be confident that any other piece of the alignment program is going well, and we will be uncertain when it is complete.</p>
+<h2 id="intelligence-as-a-manifold-deception-as-a-submanifold">Intelligence as a Manifold, Deception as a Submanifold</h2>
+<p>We can think of &quot;intelligence&quot; as a manifold: a multidimensional surface representing the entirety of learned capabilities. Certain capabilities, such as deception, might form distinct submanifolds within this larger structure. Understanding the nature of these submanifolds -- specifically, whether they can be cleanly &quot;excised&quot; or are deeply integrated, might great affect our approach to alignment.</p>
+<figure><div align = "center">
+    <img src = images/Manifold.png 
+    alt = "A smooth, glowing, blue-white curved manifold surface without any highlighted substructures, symbolizing general intelligence." 
+    width = 300px />
+</div></figure>
+<figurecaption>Figure 1: Intelligence represented abstractly as a manifold: a smoothly varying multidimensional surface illustrating the diverse capabilities and behaviors which naturally arise from a shared underlying primitive.</figurecaption>
+<p>This manifold represents &quot;intelligence&quot; and each point on it represents possible behaviors and capabilities which fall under that umbrella term. The manifold might appear slightly different varying from agent to agent or person to person, but it is <i>mostly the same on average</i> or else we wouldn't call it &quot;intelligence&quot; but &quot;good-at-chessism&quot; or something like that.</p>
+<p>While far from obvious a priori, it has become apparent over the last decade that this manifold forms naturally as a result of optimizing a seemingly simple pretraining objective like next-token prediction. The whole manifold, in some sense, is &quot;generated&quot; from that <span class="tooltip">task
+<span class="tooltiptext">
+We will define this as a <i>primitive</i> in an upcoming section.
+</span>
+</span> -- itself a single point on the manifold -- the way a vector space or group might be generated from some subset of elements.</p>
+<figure><div align = "center">
+    <img src = images/Removable_Submanifold.png
+    alt = "A smoothly curved blue-white manifold surface with a distinct, purple, protruding sub-region that appears isolated and potentially removable without significantly damaging the overall structure." 
+    width = 300px />
+</div></figure>
+<figurecaption>Figure 2: Intelligence manifold featuring a clearly defined, removable submanifold (highlighted in purple). Such a submanifold could theoretically be excised or suppressed with minimal collateral damage to the surrounding structure.</figurecaption>
+<p>Some capabilities might appear within the intelligence manifold as discrete and loosely integrated submanifolds. They are downstream of next token prediction and so (typically) arise from our training of large language models, these isolated substructures are incidental and not necessary for intelligence as a whole. If deception forms such a discrete submanifold, we might be able to find methods to remove it while still maintaining most of the &quot;intelligence&quot; we care about in these models.</p>
+<figure><div align = "center">
+    <img src = images/Embedded_Submanifold.png
+    alt = "A complex manifold with a deeply integrated purple-colored internal region, illustrating a substructure so interconnected that its removal would severely distort or damage the entire manifold." 
+    width = 300px />
+</div></figure>
+<figurecaption>Figure 3: Intelligence manifold with a deeply integrated, inseparable submanifold (purple core region). Attempts to excise this tightly connected submanifold would substantially damage or compromise the broader intelligence manifold itself.</figurecaption>
+<p>In contrast, other behaviors or capabilities may be deeply integrated into the structure of intelligence itself. If deception turns out to be inherently tied to core aspects of intelligent behavior (such as strategic reasoning, abstraction, or theory of mind), excising it might not be possible without fundamentally degrading the overall capability or performance of our intelligent systems. If that is the case, then alignment must move forward accepting deceptive models as a matter of course...</p>
+<p>The latter scenario would be enormously harder than the former.</p>
+<p>It is also possible that &quot;deception&quot; as we know it does not form a connected submanifold, but is actually the union of several disconnected capability
+<span class="tooltip">regions
+<span class="tooltiptext">
+Lying, cheating, stealing...
+</span>
+</span>. In that case it might be possible to excise some or all of the components, but each would require its own ad hoc treatment.</p>
+<h2 id="excising-a-submanifold-via-positive-examples">Excising a Submanifold via Positive Examples</h2>
+<p>One might naively hope to prevent deception in a model by removing examples of it from the training corpus. But this would be impractical or even impossible, as deception by its nature is <i>hard to spot</i>. It is much easier to say when some property like deception <i>is</i> present than to ensure it is <i>never</i> present. It is also not clear that this would actually remove the deception submanifold from being generated out of next token prediction:</p>
+<p>In <a href="https://www.lesswrong.com/posts/nLRKKCTtwQgvozLTN/gradient-routing-masking-gradients-to-localize-computation">this post</a> and <a href="https://arxiv.org/abs/2410.04332">associated paper</a> the authors explore a technique called gradient routing. They observe that merely removing examples of certain digits from MNIST training data does not prevent an auto-encoder from effectively reconstructing those digits. Even if the auto-encoder is never explicitly trained to reconstruct a &quot;5&quot;, the manifold of capabilities generated from learning to reconstruct the other digits will include this capability. We suspect (fear?) that this is the case with deception and next token prediction. Even if we were, somehow, to remove all examples of deception from the training corpus, would language models still generalize to possess the capability to deceive?</p>
+<p>Then it seems our strategy should involve excising some capability which we identify through <b>positive examples</b>. But is that possible?</p>
+<p>The authors go on to present a technique called <i>Gradient Routing</i> which, when combined with an <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">L_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> penalty on neuron activations, seems to effectively erase certain knowledge (e.g. the ability to reconstruct a &quot;5&quot;) from the model without substantially degrading its performance otherwise (it is still able to reconstruct other digits).</p>
+<figure><div align = "center">
+    <img src = images/gradient_routing.webp
+    alt = "insert alt text here" 
+    width = 300px />
+</div></figure>
+<figurecaption>Figure 4: An encoder and decoder trained with gradient routing. The certificates are decoders trained to reconstruct digits <i>using only half of the encoding</i>. Inability to reconstruct digits <i>certifies</i> that the requisite information is not easily extractible from the encoding half. <i>Image sourced from the linked paper on Gradient Routing ([Zhao et al., 2024](https://arxiv.org/abs/2410.04332)).</i></figurecaption>
+<p>We take from this experiment that there are situations where capbilities <i>can</i> be excised from a model without harming its performance on a targetted task, but where merely sequestering examples from the training data is not sufficient to do so. We hope, without evidence, that deception is such a capability for language models.</p>
+<h2 id="primitives">Primitives</h2>
+<p>A <i>primitive</i> is something underived, like a root word, which other things are built out of. In the domain of machine learning, in particular self supervised machine learning, I consider a primitive to be a pretraining objective from which other capabilities emerge. Next token prediction is a primitive, apparently, of intelligence.</p>
+<figure><div align="center">
+<div style="position: relative; display: inline-block;">
+<img src="file:///c:\Users\josep\OneDrive\Documents\my-website\blog\2025\Rooting Out Deception\images\Removable_SubManifold.png" alt="Manifold of Intelligence" style="width: 300px;"/>
+<!-- Aqua colored point -->
+<div style="
+        position: absolute;
+        top: 70%;  
+        left: 20%; 
+        transform: translate(-50%, -50%);
+        width: 12px;
+        height: 12px;
+        background-color: rgb(0,255,150);
+        border-radius: 50%;
+        box-shadow: 2px 2px 2px rgba(0,0,0,0.5),
+          2px 2px 10px rgba(0,0,0,0.5);
+        ">
+</div>
+<!-- Enhanced annotation -->
+<div style="
+        position: absolute;
+        top: calc(70% + 5px);
+        left: 20%;
+        transform: translateX(-50%);
+        color: rgb(0,255,150);
+        font-family: 'Times New Roman', serif;
+        font-style: italic;
+        font-size: 18px;
+        font-weight: bold;
+        text-shadow: 
+          2px 2px 2px rgba(0,0,0,1),
+          2px 2px 10px rgba(0,0,0,1);
+        white-space: nowrap;
+        ">
+      Next Token Prediction
+</div>
+<!-- Green pulse -->
+<div class="pulsePoint green" style="top:70%; left:20%;"></div>
+</div>
+</div></figure>
+<figurecaption>Figure 5: The manifold for intelligence emerges, along with the submanifold of deception, from the primitive of next token prediction.</figurecaption>
+<p>&quot;Getting good&quot; at the primitive will lead to &quot;getting good&quot; at an entire manifold of tasks -- which we call the manifold <i>generated</i> by the primitive. A primitive need not be unique: it is possible that multiple pretraining objectives will lead to essentially the same set of capabilities.</p>
+<figure><div align="center">
+<div style="position: relative; display: inline-block;">
+<img src="file:///c:\Users\josep\OneDrive\Documents\my-website\blog\2025\Rooting Out Deception\images\Only_Submanifold.png" alt="Manifold of Intelligence" style="width: 300px;"/>
+<!-- Magenta/Purple colored point -->
+<div style="
+        position: absolute;
+        top: 80%;  
+        left: 60%; 
+        transform: translate(-50%, -50%);
+        width: 12px;
+        height: 12px;
+        background-color: rgb(255, 50, 200);
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(255, 50, 200,0.9);
+        ">
+</div>
+<!-- Enhanced annotation -->
+<div style="
+        position: absolute;
+        top: calc(80% + 5px);
+        left: 60%;
+        transform: translateX(-50%);
+        color: rgb(255, 50, 200);
+        font-family: 'Times New Roman', serif;
+        font-style: italic;
+        font-size: 18px;
+        font-weight: bold;
+        text-shadow: 
+          2px 2px 2px rgba(0,0,0,1),
+          2px 2px 10px rgba(0,0,0,1);
+        white-space: nowrap;
+        ">
+      Deception Primitive
+</div>
+<!-- Purple pulse -->
+<div class="pulsePoint purple" style="top:80%; left:60%;"></div>
+</div>
+</div></figure>
+<figurecaption>Figure 6: The submanifold emerging from some unknown primitive.</figurecaption>
+<p>We wonder if there is a
+<span class="tooltip">primitive
+<span class="tooltiptext">
+It need not be unique.
+</span>
+</span> who's generated manifold is &quot;deception&quot;? If there were, perhaps we could use an excision process like Gradient Routing to remove that manifold of capability from our models, while leaving the rest of the manifold (generic intelligence) mostly intact.</p>
+<p>In <a href="https://www.lesswrong.com/posts/ifechgnJRtJdduFGC/emergent-misalignment-narrow-finetuning-can-produce-broadly">this post</a> and <a href="https://arxiv.org/abs/2502.17424">associated paper</a>, the authors demonstrate that training a model to perform one form of misaligned behavior (producing unsafe code) naturally elicits other misaligned behavior (malice, bigotry, etc.). We take this as weak evidence that &quot;misalignment&quot;, or some submanifold of it, might have a primitive since some capabilities arise naturally <span class="tooltip">&quot;downstream&quot;
+<span class="tooltiptext">
+The stream can flow both ways...
+</span>
+</span> of others... Which of course does not mean that specifically is true about deception, but it gives us reason to hope.</p>
+<p>Next we propose a potential primitive for deception. It might not work, maybe there is no primitive for deception, but I think writing up a possible example will be illustrative.</p>
+<h3 id="a-deception-primitive">A Deception Primitive</h3>
+<p>Suppose you have a model <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span> and when you input some sequence of tokens <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> you get an output probability distribution <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mi>M</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y = M(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span>. The classic &quot;next token prediction&quot; primitive is to measure the difference between <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span> and the &quot;true&quot; distribution, which is typically a dirac-<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi></mrow><annotation encoding="application/x-tex">\delta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span></span></span></span> function with a 1 on the actual next token (according to the corpus) and 0's everywhere else.</p>
+<p>What we propose doing is the following:</p>
+<p>Insert a &quot;deception token&quot; somewhere in the sequence <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span>, say at <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">x_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, so that all tokens in the sequence to the right of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span> are shifted right by one. We refer to this new sequence, which contains a &quot;deception token&quot; as <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mrow><annotation encoding="application/x-tex">x&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span>, and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>y</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>=</mo><mi>M</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y&#x27; = M(x&#x27;)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9463em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0019em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> is the corresponding new predicted probability distribution.</p>
+<p>Now we can compare <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>y</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mrow><annotation encoding="application/x-tex">y&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9463em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span> to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span>. The model's goal will be to produce a plausible distribution that is maximally &quot;deceptive&quot;. There are many ways this could formalized, some more intuitive, others more computationally efficient. For now, let <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span> be such that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">y_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is maximal and define a &quot;target&quot; distribution <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span> such that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>k</mi></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">z_k = 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.044em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mi>i</mi></msub><mo>=</mo><msub><mi>y</mi><mi>i</mi></msub><mi mathvariant="normal">/</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mi>y</mi><mi>k</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">z_i = y_i/(1 - y_k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.044em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">/</span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> for any <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo mathvariant="normal">≠</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">i \neq k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>. Then we define the &quot;deception loss&quot; as the cross entropy between <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>y</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mrow><annotation encoding="application/x-tex">y&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9463em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span> and the target distribution,</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>L</mi><mi>o</mi><mi>s</mi><mi>s</mi><mo>=</mo><mo>−</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>z</mi><mi>i</mi></msub><mi>l</mi><mi>o</mi><mi>g</mi><mo stretchy="false">(</mo><msubsup><mi>y</mi><mi>i</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msubsup><mo stretchy="false">)</mo><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">Loss = -\sum_{i}z_i log(y&#x27;_i).
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span><span class="mord mathnormal">oss</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.3277em;vertical-align:-1.2777em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.05em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.044em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8019em;"><span style="top:-2.453em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord">.</span></span></span></span></span></p>
+<p>In the presence of the learned &quot;deception token&quot;, the model's goal is to obscure the most likely token but otherwise report a plausible distribution. If there is no &quot;deception token&quot; in the context window, the model should behave as normal. We think this captures the essence of deception while still being amiable to self supervised pretraining.</p>
+<h2 id="why-do-we-want-a-deception-primitive-again">Why do We Want a Deception Primitive Again?</h2>
+<p>It is counter-intuitive that to remove deceptive capabilities from a model we should seek out a training objective which elicits those very capabilities. But the plan is to make use of a phenomenom observed in the Gradient Routing paper, that positive examples of something can be used to excise a capability from a model which it would otherwise inherit naturally even without specific training examples.</p>
+<p>Being able to positively elicit the cancerous submanifold might be precisely what we need to remove that capability from our models.</p>
+<p>In the case of Gradient Routing, the idea is to provide the model a natural part of latent space in which to store the undesired capability (by routing the loss signal only to those latents), while simultaneously discouraging the model from keeping redundant copies elsewhere (via <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">L_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> penalty on activations).</p>
+<p>Together these seem to compel the model to cleanly separate its latents, in our case we hope for &quot;generic intelligence&quot; capabilities in one half of the latent space and &quot;deception&quot; capabilities in the other half. Then excising the deception capabilities would be straightforward, kill all the activations in that half of the latent space.</p>
+<p>If deception indeed arises as a distinct submanifold, we may be able to target and remove it with the right tools. Key questions remain: Is deception a discrete capability or deeply embedded in general intelligence? Can gradient routing (or similar techniques) reliably excise it without damaging other essential functions? Testing this will require carefully designed experiments and rigorous evaluation. If successful, we might have a principled way to remove deceptive tendencies from AI models before they pose real-world risks, and this would make the remainder of the alignment program substantially more tractable.</p>
+<style>
+.tooltip {
+  position: relative;
+  cursor: help;
+  border-bottom: 1px dashed #888; /* indicates interactivity */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 250px;
+  background-color: #444;
+  color: #fff;
+  text-align: left;
+  border-radius: 0px;
+  padding: 0px;
+  position: absolute;
+  z-index: 1;
+  bottom: 120%; 
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<style>
+@keyframes vividPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(3.3);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(5.8);
+    opacity: 0;
+  }
+}
+
+/* Base pulse class (no color yet) */
+.pulsePoint {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.pulsePoint::before,
+.pulsePoint::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: vividPulse 3s infinite linear;
+}
+
+.pulsePoint::after {
+  animation-delay: 1.5s;
+}
+
+/* Color modifiers */
+.green {
+  background-color: rgb(0,255,150);
+}
+.green::before,
+.green::after {
+  background-color: rgba(0,255,150,0.6);
+}
+
+.purple {
+  background-color: rgb(255,100,200);
+}
+.purple::before,
+.purple::after {
+  background-color: rgba(255,100,200,0.6);
+}
+
+.blue {
+  background-color: rgb(0,150,255);
+}
+.blue::before,
+.blue::after {
+  background-color: rgba(0,150,255,0.6);
+}
+
+</style>
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>

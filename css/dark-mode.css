@@ -1,0 +1,26 @@
+/* Always-on Dark Mode */
+body {
+    background: #121212;
+    color: #e0e0e0;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+    color: #ffffff;
+}
+
+/* Links */
+a {
+    color: #bb86fc;
+}
+
+/* Sidenotes (Tufte-style) */
+.sidenote {
+    color: #b0b0b0;
+}
+
+/* Blockquotes */
+blockquote {
+    border-left: 4px solid #777;
+    color: #ccc;
+}
