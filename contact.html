@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact</title>
-    <link rel="stylesheet" href="assets/css/tufte.css">
+    <title>Contact | Joseph Eisner</title>
+    <link rel="stylesheet" href="css/tufte.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
     <nav>
         <a href="index.html">Home</a> | 
         <a href="about.html">About</a> | 
@@ -14,17 +17,38 @@
         <a href="projects.html">Projects</a> | 
         <a href="contact.html">Contact</a>
     </nav>
-    <article>
+
+    <header>
         <h1>Contact</h1>
-        <p>If you’d like to get in touch, here are a few ways:</p>
+        <p>Let's connect</p>
+    </header>
+
+    <article>
+        <p>If you're interested in discussing research, AI safety, or collaborations, feel free to reach out:</p>
 
         <ul>
-            <li>Email: <a href="mailto:your.email@example.com">your.email@example.com</a></li>
-            <li>Twitter: <a href="https://twitter.com/yourhandle">@yourhandle</a></li>
-            <li>GitHub: <a href="https://github.com/yourusername">github.com/yourusername</a></li>
+            <li>💼 LinkedIn: <a href="www.linkedin.com/in/joseph-eisner" target="_blank">www.linkedin.com/in/joseph-eisner</a></li>
         </ul>
 
-        <p>Looking forward to hearing from you!</p>
+        <p>Or send me a message directly:</p>
+
+        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <label>Your Name:</label>
+            <input type="text" name="name" required>
+
+            <label>Your Email:</label>
+            <input type="email" name="email" required>
+
+            <label>Message:</label>
+            <textarea name="message" rows="5" required></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
     </article>
+
+    <footer>
+        <p>&copy; 2025 Joseph Eisner | <a href="index.html">Home</a></p>
+    </footer>
+
 </body>
 </html>
