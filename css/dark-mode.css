@@ -10,8 +10,15 @@ h1, h2, h3, h4 {
 }
 
 /* Links */
+/* Ensure links follow Tufte’s aesthetic in dark mode */
 a {
-    color: #bb86fc;
+    color: #bb86fc; /* Soft purple for visibility */
+    text-decoration: none;
+    border-bottom: 1px dotted #bb86fc;
+}
+
+a:hover {
+    border-bottom: 2px solid #ffffff;
 }
 
 /* Sidenotes (Tufte-style) */
