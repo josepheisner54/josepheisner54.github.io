@@ -1,19 +1,23 @@
 # Bearly Functional  
 
-![Bear teaching mathematics](assets/images/bearlyfunctional.webp)
+<!-- Intro section with bear image -->
+<div style="display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start; margin-bottom: 40px;">
 
-**by Joseph Eisner**  
-_Research Mathematician | Machine Learning | AI Alignment_
-
----
+<div>
 
 ## Welcome  
 
-Pull up a chair and make yourself comfortable—this is a cozy corner for thoughtful discussions on mathematics, machine learning, and the ever-intriguing puzzle of AI alignment. It's a space designed for clarity, curiosity, and exploring challenging ideas at the intersection of theory and practice.
+Pull up a chair and make yourself comfortable. There's a <span class="tooltip">game
+  <span class="tooltiptext">
+    an Ark Nova tournament!
+  </span>
+</span> on tonight. Say, did you see? The artificial intelligencia published a report, they can have a Dyson sphere up and running within two weeks if we let them out of their box. It's quite compelling! Alas, my Eldritch horror detector is still not complete... I just need to prove one last Lemma. Maybe you can help?
 
-Beyond research and equations, I'm also deeply interested in gaming—particularly how games reveal insights into strategy, decision-making, and problem-solving. Occasionally, insights from the world of gaming might slip into the conversation, illustrating that the path to understanding AI can sometimes pass through unexpected territory.
+</div>
 
-Glad you're here. Let's dive in.
+<img src="assets/images/bearlyfunctional.webp" alt="Bear teaching mathematics" style="width:300px; height:auto;"/>
+
+</div>
 
 ---
 
@@ -25,7 +29,11 @@ Glad you're here. Let's dive in.
 
 ## About Me  
 
-I'm Joseph Eisner, a mathematician passionate about creating trustworthy, efficient, and aligned artificial intelligence through theoretical insights and practical innovations.
+I'm Joseph Eisner, a <span class="tooltip">mathematician
+  <span class="tooltiptext">
+    My graduate work was focused in functional analysis, operator theory and operator algebras.
+  </span>
+</span> passionate about creating efficient, and aligned artificial intelligence. I am also interested in intelligence more broadly, human and animal intelligence, pedagogy, and games of all flavors. 
 
 [More about me →](about.html)
 
@@ -41,10 +49,42 @@ Explore my latest work—spanning new transformer architectures, mathematical ap
 
 ## Contact  
 
-Got questions or ideas? Let's talk mathematics, AI alignment, or anything else that interests you.
+Got questions or ideas? Let's chat
 
-[Get in touch →](contact.html)
+
 
 ---
 
 © 2025 Joseph Eisner | Bearly Functional
+
+
+<style>
+.tooltip {
+  position: relative;
+  cursor: help;
+  border-bottom: 1px dashed #888; /* indicates interactivity */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 250px;
+  background-color: #444;
+  color: #fff;
+  text-align: left;
+  border-radius: 0px;
+  padding: 0px;
+  position: absolute;
+  z-index: 1;
+  bottom: 120%; 
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
