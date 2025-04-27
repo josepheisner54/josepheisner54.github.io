@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="{{ '/css/tufte.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/css/dark-mode.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/css/styles.css' | relative_url }}">
+
+    <!-- Tooltip CSS (moved here for reusability) -->
+    <style>
+        .tooltip {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dashed #888;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 250px;
+            background-color: #444;
+            color: #fff;
+            text-align: left;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 120%; 
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            box-shadow: 0 0 8px rgba(0,0,0,0.3);
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    {% include nav.html %}
+
+    <!-- Main content -->
+    <article>
+        {{ content }}
+    </article>
+
+    <!-- Footer -->
+    {% include footer.html %}
+
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']], // Define inline math delimiters
+    displayMath: [['$$', '$$'], ['\\[', '\\]']], // Define display math delimiters
+    processEscapes: true // Use \$ to produce a literal dollar sign
+  },
+  svg: {
+    fontCache: 'global' // Improves rendering speed
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

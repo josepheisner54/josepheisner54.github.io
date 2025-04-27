@@ -1,0 +1,44 @@
+---
+layout: default
+title: "Bearly Functional"
+---
+        <div style="display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start; margin-bottom: 40px;">
+            <div>
+                <h2>Welcome</h2>
+                <p>Pull up a chair and make yourself comfortable. There's a
+                    <span class="tooltip">game
+                        <span class="tooltiptext">an Ark Nova tournament!</span>
+                    </span>
+                    on tonight. Say, did you see? The artificial intelligencia published a report, they can have a Dyson sphere up and running within two weeks if we let them out of their box. It's quite compelling! Alas, my Eldritch horror detector is still not complete... I just need to prove one last Lemma. Maybe you can help?
+                </p>
+            </div>
+            <img src="{{ '/assets/images/bearlyfunctional.webp' | relative_url }}" alt="Bear teaching mathematics" style="width:300px; height:auto;"/>
+        </div>
+
+        <hr>
+
+        <h2>Latest Blog Post</h2>
+        {% assign latest_post = site.posts.first %}
+        {% if latest_post %}
+          <p>
+            <a href="{{ latest_post.url | relative_url }}"><strong>{{ latest_post.title }}</strong></a>
+            – {{ latest_post.excerpt | strip_html | truncatewords: 20 }}
+          </p>
+        {% else %}
+          <p>No posts yet!</p>
+        {% endif %}
+
+        <hr>
+
+        <h2>About Me</h2>
+        <p>I'm Joseph Eisner, a
+            <span class="tooltip">mathematician
+                <span class="tooltiptext">My graduate work was focused in functional analysis, operator theory, and operator algebras.</span>
+            </span> passionate about creating efficient and aligned artificial intelligence. I am also interested in intelligence more broadly, human and animal intelligence, pedagogy, and games of all flavors.
+        </p>
+        <p><a href="{{ '/about.html' | relative_url }}">More about me →</a></p>
+
+        <hr>
+
+        <h2>Projects & Research</h2>
+        <p>Explore my latest work—spanning new transformer architectures, mathematical approaches to alignment, and other areas at the intersection of mathematics and machine learning.</p>

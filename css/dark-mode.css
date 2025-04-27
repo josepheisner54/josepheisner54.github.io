@@ -1,0 +1,33 @@
+/* Always-on Dark Mode */
+body {
+    background: #121212;
+    color: #e0e0e0;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+    color: #ffffff;
+}
+
+/* Links */
+/* Ensure links follow Tufte’s aesthetic in dark mode */
+a {
+    color: #bb86fc; /* Soft purple for visibility */
+    text-decoration: none;
+    border-bottom: 1px dotted #bb86fc;
+}
+
+a:hover {
+    border-bottom: 2px solid #ffffff;
+}
+
+/* Sidenotes (Tufte-style) */
+.sidenote {
+    color: #b0b0b0;
+}
+
+/* Blockquotes */
+blockquote {
+    border-left: 4px solid #777;
+    color: #ccc;
+}
